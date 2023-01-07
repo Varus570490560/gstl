@@ -29,8 +29,6 @@ func NewList[T any]() *List[T] {
 
 func (l *List[T]) PushBackElement(element T) {
 	nodeId := l.nodeId
-	l.nodeId++
-	l.length++
 	newNode := &Iterator[T]{
 		nodeId:  nodeId,
 		element: element,
@@ -44,6 +42,8 @@ func (l *List[T]) PushBackElement(element T) {
 		newNode.pPre = l.pEnd
 	}
 	l.pEnd = newNode
+	l.nodeId++
+	l.length++
 	return
 }
 
@@ -90,8 +90,6 @@ func (l *List[T]) PopFront() {
 
 func (l *List[T]) PushFrontElement(element T) {
 	nodeId := l.nodeId
-	l.nodeId++
-	l.length++
 	newNode := &Iterator[T]{
 		nodeId:  nodeId,
 		element: element,
@@ -105,6 +103,8 @@ func (l *List[T]) PushFrontElement(element T) {
 		newNode.pNext = l.pHead
 	}
 	l.pHead = newNode
+	l.nodeId++
+	l.length++
 	return
 }
 
