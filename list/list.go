@@ -47,9 +47,11 @@ func (l *List[T]) PushBackElement(element T) {
 	return
 }
 
-func (l *List[T]) PushBackList(list List[T]) {
+func (l *List[T]) PushBackList(list *List[T]) {
 	if list.length == 0 {
 		return
+	} else if l == list {
+		list = l.Clone()
 	}
 	for iterator := list.pHead; iterator.pNext != nil; iterator = iterator.pNext {
 		l.PushBackElement(iterator.element)
@@ -108,11 +110,19 @@ func (l *List[T]) PushFrontElement(element T) {
 	return
 }
 
-func (l *List[T]) PushFrontList(list List[T]) {
+func (l *List[T]) PushFrontList(list *List[T]) {
 	if list.length == 0 {
 		return
+	} else if l == list {
+		list = list.Clone()
 	}
 	for iterator := list.pEnd; iterator.pPre != nil; iterator = iterator.pPre {
 		l.PushFrontElement(iterator.element)
 	}
+}
+
+func (l *List[T]) Clone() *List[T] {
+	listClone := NewList[T]()
+	listClone.PushBackList(l)
+	return listClone
 }
