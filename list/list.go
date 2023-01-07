@@ -5,17 +5,17 @@ package list
 */
 
 type List[T any] struct {
-	pHead  *node[T]
-	pEnd   *node[T]
+	pHead  *Iterator[T]
+	pEnd   *Iterator[T]
 	length int
 	nodeId int
 }
 
-type node[T any] struct {
+type Iterator[T any] struct {
 	element T
 	nodeId  int
-	pNext   *node[T]
-	pPre    *node[T]
+	pNext   *Iterator[T]
+	pPre    *Iterator[T]
 }
 
 func NewList[T any]() *List[T] {
@@ -31,7 +31,7 @@ func (l *List[T]) PushBackElement(element T) {
 	nodeId := l.nodeId
 	l.nodeId++
 	l.length++
-	newNode := &node[T]{
+	newNode := &Iterator[T]{
 		nodeId:  nodeId,
 		element: element,
 		pNext:   nil,
@@ -92,7 +92,7 @@ func (l *List[T]) PushFrontElement(element T) {
 	nodeId := l.nodeId
 	l.nodeId++
 	l.length++
-	newNode := &node[T]{
+	newNode := &Iterator[T]{
 		nodeId:  nodeId,
 		element: element,
 		pNext:   nil,
