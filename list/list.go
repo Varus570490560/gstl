@@ -11,13 +11,6 @@ type List[T any] struct {
 	nodeId int
 }
 
-type Iterator[T any] struct {
-	element T
-	nodeId  int
-	pNext   *Iterator[T]
-	pPre    *Iterator[T]
-}
-
 func NewList[T any]() *List[T] {
 	return &List[T]{
 		pHead:  nil,
@@ -125,4 +118,12 @@ func (l *List[T]) Clone() *List[T] {
 	listClone := NewList[T]()
 	listClone.PushBackList(l)
 	return listClone
+}
+
+func (l *List[T]) Begin() *Iterator[T] {
+	return l.pHead
+}
+
+func (l *List[T]) End() *Iterator[T] {
+	return l.pEnd
 }
