@@ -97,7 +97,7 @@ func (l *List[T]) PushFrontElement(element T) {
 		pPre:    nil,
 	}
 	if l.length == 0 {
-		l.pHead = newNode
+		l.pEnd = newNode
 	} else {
 		l.pHead.pPre = newNode
 		newNode.pNext = l.pHead
