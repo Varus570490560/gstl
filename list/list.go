@@ -121,9 +121,19 @@ func (l *List[T]) Clone() *List[T] {
 }
 
 func (l *List[T]) Begin() *Iterator[T] {
+	if l.length == 0 {
+		panic("List get first element with length is 0.")
+	}
 	return l.pHead
 }
 
 func (l *List[T]) End() *Iterator[T] {
+	if l.length == 0 {
+		panic("List get last element with length is 0.")
+	}
 	return l.pEnd
+}
+
+func (l *List[T]) Empty() bool {
+	return l.length == 0
 }
