@@ -199,3 +199,26 @@ func (l *List[T]) InsertBackList(position *Iterator[T], list *List[T]) {
 		list.InsertBackElement(position, it.Value())
 	}
 }
+
+func (l *List[T]) EraseElement(iterator *Iterator[T]) {
+	if iterator == l.pHead {
+		l.PopFront()
+		return
+	} else if iterator == l.pEnd {
+		l.PopBack()
+		return
+	}
+	iterator.pPre.pNext = iterator.pNext
+	iterator.pNext.pPre = iterator.pPre
+	l.length--
+	return
+}
+
+// EraseElements remove the element between start iterator and end iterator, the start element will be removed but the end not.
+// Waring: You must insure start iterator in front of the end. For execution efficiency, EraseElements don't check it.
+func (l *List[T]) EraseElements(start *Iterator[T], end *Iterator[T]) {
+	if start == end {
+		return
+	}
+
+}
