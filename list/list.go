@@ -120,20 +120,56 @@ func (l *List[T]) Clone() *List[T] {
 	return listClone
 }
 
-func (l *List[T]) Begin() *Iterator[T] {
+func (l *List[T]) Begin() (*Iterator[T], bool) {
 	if l.length == 0 {
-		panic("List get first element with length is 0.")
+		return nil, false
 	}
-	return l.pHead
+	return l.pHead, true
 }
 
-func (l *List[T]) End() *Iterator[T] {
+func (l *List[T]) End() (*Iterator[T], bool) {
 	if l.length == 0 {
-		panic("List get last element with length is 0.")
+		return nil, false
 	}
-	return l.pEnd
+	return l.pEnd, true
 }
 
 func (l *List[T]) Empty() bool {
 	return l.length == 0
+}
+
+// InsertElementFront don't verify if the iterator in receiver list. It inserts the element front of the iterator.
+func (l *List[T]) InsertElementFront(position *Iterator[T], element T) {
+	if position == l.pHead {
+		l.PushFrontElement(element)
+		return
+	}
+	newNode := &Iterator[T]{
+		nodeId:  l.nodeId,
+		element: element,
+		pNext:   position,
+		pPre:    position.pPre,
+	}
+	position.pPre = newNode
+	newNode.pPre.pNext = newNode
+	l.length++
+	l.nodeId++
+}
+
+// InsertElementBack don't verify if the position iterator in receiver list. It inserts the element back of the iterator.
+func (l *List[T]) InsertElementBack(position *Iterator[T], element T) {
+	if position == l.pEnd {
+		l.PushBackElement(element)
+		return
+	}
+	newNode := &Iterator[T]{
+		nodeId:  l.nodeId,
+		element: element,
+		pNext:   position.pNext,
+		pPre:    position,
+	}
+	position.pNext = newNode
+	newNode.pNext.pPre = newNode
+	l.length++
+	l.nodeId++
 }
