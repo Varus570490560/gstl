@@ -138,8 +138,8 @@ func (l *List[T]) Empty() bool {
 	return l.length == 0
 }
 
-// InsertElementFront don't verify if the iterator in receiver list. It inserts the element front of the iterator.
-func (l *List[T]) InsertElementFront(position *Iterator[T], element T) {
+// InsertFrontElement don't verify if the iterator in receiver list. It inserts the element front of the iterator.
+func (l *List[T]) InsertFrontElement(position *Iterator[T], element T) {
 	if position == l.pHead {
 		l.PushFrontElement(element)
 		return
@@ -156,8 +156,8 @@ func (l *List[T]) InsertElementFront(position *Iterator[T], element T) {
 	l.nodeId++
 }
 
-// InsertElementBack don't verify if the position iterator in receiver list. It inserts the element back of the iterator.
-func (l *List[T]) InsertElementBack(position *Iterator[T], element T) {
+// InsertBackElement don't verify if the position iterator in receiver list. It inserts the element back of the iterator.
+func (l *List[T]) InsertBackElement(position *Iterator[T], element T) {
 	if position == l.pEnd {
 		l.PushBackElement(element)
 		return
@@ -172,4 +172,30 @@ func (l *List[T]) InsertElementBack(position *Iterator[T], element T) {
 	newNode.pNext.pPre = newNode
 	l.length++
 	l.nodeId++
+}
+
+// InsertFrontList don't verify if the iterator in receiver list. It inserts the list front of the iterator.
+func (l *List[T]) InsertFrontList(position *Iterator[T], list *List[T]) {
+	if list.Empty() {
+		return
+	}
+	if l == list {
+		list = list.Clone()
+	}
+	for it, ok := list.End(); ok; it, ok = it.Previous() {
+		list.InsertFrontElement(position, it.Value())
+	}
+}
+
+// InsertBackList don't verify if the iterator in receiver list. It inserts the list back of the iterator.
+func (l *List[T]) InsertBackList(position *Iterator[T], list *List[T]) {
+	if list.Empty() {
+		return
+	}
+	if l == list {
+		list = list.Clone()
+	}
+	for it, ok := list.Begin(); ok; it, ok = it.Next() {
+		list.InsertBackElement(position, it.Value())
+	}
 }
