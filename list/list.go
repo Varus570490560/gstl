@@ -214,11 +214,11 @@ func (l *List[T]) EraseElement(iterator *Iterator[T]) {
 	return
 }
 
-// EraseElements remove the element between start iterator and end iterator, the start element will be removed but the end not.
-// Waring: You must insure start iterator in front of the end. For execution efficiency, EraseElements don't check it.
-func (l *List[T]) EraseElements(start *Iterator[T], end *Iterator[T]) {
-	if start == end {
-		return
-	}
-
-}
+//// EraseElements remove the element between start iterator and end iterator, the start element will be removed but the end not.
+//// Waring: You must insure start iterator in front of the end. For execution efficiency, EraseElements don't check it.
+//func (l *List[T]) EraseElements(start *Iterator[T], end *Iterator[T]) {
+//	if start == end {
+//		return
+//	}
+//
+//}
