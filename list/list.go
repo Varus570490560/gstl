@@ -214,11 +214,41 @@ func (l *List[T]) EraseElement(iterator *Iterator[T]) {
 	return
 }
 
-//// EraseElements remove the element between start iterator and end iterator, the start element will be removed but the end not.
-//// Waring: You must insure start iterator in front of the end. For execution efficiency, EraseElements don't check it.
-//func (l *List[T]) EraseElements(start *Iterator[T], end *Iterator[T]) {
-//	if start == end {
-//		return
-//	}
-//
-//}
+// EraseElements remove the element between start iterator and end iterator, both start and end will be removed.
+// Warning: You must insure start iterator in front of the end. For execution efficiency, EraseElements don't check it.
+func (l *List[T]) EraseElements(start *Iterator[T], end *Iterator[T]) {
+	if start == end {
+		l.EraseElement(start)
+		return
+	}
+	if start.pPre == end {
+		return
+	}
+	var lengthCount = 1
+	var ok = true
+	for it := start; true; it, ok = it.Next() {
+		if !ok {
+			panic("Start iterator isn't in front of the end iterator.")
+		} else if it == end {
+			break
+		}
+		lengthCount++
+	}
+	if start == l.pHead && end == l.pEnd {
+		l.pHead = nil
+		l.pEnd = nil
+		l.length = 0
+		return
+	} else if start == l.pHead {
+		l.pHead = end.pNext
+		end.pNext.pPre = nil
+	} else if end == l.pEnd {
+		l.pEnd = start.pPre
+		start.pPre.pNext = nil
+	} else {
+		start.pPre.pNext = end.pNext
+		end.pNext.pPre = start.pPre
+	}
+	l.length -= lengthCount
+	return
+}
